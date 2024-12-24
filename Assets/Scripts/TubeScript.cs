@@ -17,6 +17,6 @@ public class TubeScript : MonoBehaviour
         //Vector3.left * speed* Time.deltaTime
         //если переставить местами и сначала поставить числа, это более простая операция
         //сначала умножаются числа и получается число, а потом вектор
-        this.transform.Translate( speed* Time.deltaTime*Vector3.left);
+        this.transform.Translate(speed* Time.deltaTime*Vector3.left);
     }
 }
