@@ -3,20 +3,23 @@ using UnityEngine;
 public class CloudScript : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 0.2f;
+    private float speed = 0.2f; //скорость движения облаков (сериализируемая, можно отредактировать в Unity на лету)
     //public Vector3 startPosition;
     //public Vector3 resetPosition;
     //private Vector3[] cloudStartPositions;
 
+    //ссылка на главную камеру
     private Camera mainCamera;
+    //правая граница экрана
     private float screenRightEdge;
 
     private Transform[] clouds;
     void Start()
     {
         clouds= GetComponentsInChildren<Transform>();
-
+        //ссылка на главную камеру
         mainCamera=Camera.main;
+        //рассчитываем правую границу экрана
         screenRightEdge=mainCamera.ViewportToWorldPoint(new Vector3(1,0,0)).x;
         //cloudStartPositions = new Vector3[clouds.Length];
 
@@ -28,14 +31,17 @@ public class CloudScript : MonoBehaviour
 
     void Update()
     {
+        //двикаем каждое облако в группе
         foreach (Transform cloud in clouds)
         {
+            //игнор для родителя
             if (cloud == transform) continue;
-
+            //движение облака влево
             cloud.Translate(speed * Time.deltaTime * Vector3.left);
-
+            //условие, когда облако уходит за пределы левой границы экрана
             if(cloud.position.x<mainCamera.ViewportToWorldPoint(new Vector3(-0.1f, 0, 0)).x)
             {
+                //перемещение облака за правую границу экрана
                 cloud.position=new Vector3(screenRightEdge + 1f, cloud.position.y, cloud.position.z);
             }
 
